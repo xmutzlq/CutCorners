@@ -138,7 +138,7 @@ public class CutHelper {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setXfermode(mXfermode);
 
-        buildCutPath(2);
+        buildCutPath(1);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mTempPath.reset();
