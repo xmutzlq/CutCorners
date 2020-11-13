@@ -57,6 +57,8 @@
         <attr name="rBottomRightRadius" />
         <attr name="rStrokeWidth" />
         <attr name="rStrokeColor" />
+        <attr name="rStrokeOuterWidth" />
+        <attr name="rStrokeOuterColor" />
     </declare-styleable>
 
     <declare-styleable name="RoundRelativeLayout">
