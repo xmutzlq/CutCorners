@@ -11,6 +11,8 @@
     <attr name="rBottomRightRadius" format="dimension" />
     <attr name="rStrokeWidth" format="dimension" />
     <attr name="rStrokeColor" format="reference" />
+    <attr name="rStrokeOuterWidth" format="dimension"/>
+    <attr name="rStrokeOuterColor" format="reference" />
 
     <declare-styleable name="RoundCorner">
         <attr name="rRadius" />
@@ -24,6 +26,8 @@
         <attr name="rBottomRightRadius" />
         <attr name="rStrokeWidth" />
         <attr name="rStrokeColor" />
+        <attr name="rStrokeOuterWidth" />
+        <attr name="rStrokeOuterColor" />
     </declare-styleable>
 
     <declare-styleable name="CutCorner">
@@ -137,10 +141,19 @@
         <attr name="rBottomRightRadius" />
         <attr name="rStrokeWidth" />
         <attr name="rStrokeColor" />
+        <attr name="rStrokeOuterWidth" />
+        <attr name="rStrokeOuterColor" />
     </declare-styleable>
 
     <declare-styleable name="CircleImageView">
         <attr name="rStrokeWidth" />
         <attr name="rStrokeColor" />
+    </declare-styleable>
+
+    <declare-styleable name="DoubleCircleImageView">
+        <attr name="rStrokeWidth" />
+        <attr name="rStrokeColor" />
+        <attr name="rStrokeOuterWidth" />
+        <attr name="rStrokeOuterColor" />
     </declare-styleable>
 </resources>

@@ -28,6 +28,7 @@ public class RoundHelper {
     private Paint mPaint;
     private RectF mRectF;
     private RectF mStrokeRectF;
+    private RectF mStrokeOuterRectF;
 
     private Path mPath;
     private Path mTempPath;
@@ -38,11 +39,16 @@ public class RoundHelper {
 
     private float[] mRadii;
     private float[] mStrokeRadii;
+    private float[] mStrokeOuterRadii;
 
     private int mWidth;
     private int mHeight;
+
     private int mStrokeColor;
     private float mStrokeWidth;
+
+    private int mStrokeOuterColor;
+    private float mStrokeOuterWidth;
 
     private float mRadiusTopLeft;
     private float mRadiusTopRight;
@@ -57,9 +63,11 @@ public class RoundHelper {
         mView = view;
         mRadii = new float[8];
         mStrokeRadii = new float[8];
+        mStrokeOuterRadii = new float[8];
         mPaint = new Paint();
         mRectF = new RectF();
         mStrokeRectF = new RectF();
+        mStrokeOuterRectF = new RectF();
         mPath = new Path();
         mTempPath = new Path();
         mXfermode = new PorterDuffXfermode(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PorterDuff.Mode.DST_OUT : PorterDuff.Mode.DST_IN);
@@ -83,6 +91,13 @@ public class RoundHelper {
         mStrokeWidth = array.getDimension(R.styleable.RoundButton_rStrokeWidth, 0);
         mStrokeColor = array.getColor(R.styleable.RoundButton_rStrokeColor, mStrokeColor);
 
+        mStrokeOuterWidth = array.getDimension(R.styleable.RoundButton_rStrokeOuterWidth, 0);
+        mStrokeOuterColor = array.getColor(R.styleable.RoundButton_rStrokeOuterColor, mStrokeOuterColor);
+
+        if(mStrokeOuterWidth > 0) {
+            mStrokeOuterWidth = mStrokeOuterWidth / 2;
+        }
+
         array.recycle();
         if (!isCircle) {
             setRadius();
@@ -95,10 +110,15 @@ public class RoundHelper {
         mRadii[4] = mRadii[5] = mRadiusBottomRight - mStrokeWidth;
         mRadii[6] = mRadii[7] = mRadiusBottomLeft - mStrokeWidth;
 
-        mStrokeRadii[0] = mStrokeRadii[1] = mRadiusTopLeft;
-        mStrokeRadii[2] = mStrokeRadii[3] = mRadiusTopRight;
-        mStrokeRadii[4] = mStrokeRadii[5] = mRadiusBottomRight;
-        mStrokeRadii[6] = mStrokeRadii[7] = mRadiusBottomLeft;
+        mStrokeRadii[0] = mStrokeRadii[1] = isCircle ? mRadiusTopLeft * 2 : mRadiusTopLeft;
+        mStrokeRadii[2] = mStrokeRadii[3] = isCircle ? mRadiusTopRight * 2 : mRadiusTopRight;
+        mStrokeRadii[4] = mStrokeRadii[5] = isCircle ? mRadiusBottomRight * 2 : mRadiusBottomRight;
+        mStrokeRadii[6] = mStrokeRadii[7] = isCircle ? mRadiusBottomLeft * 2 : mRadiusBottomLeft;
+
+        mStrokeOuterRadii[0] = mStrokeOuterRadii[1] = isCircle ? mRadiusTopLeft * 2 : mRadiusTopLeft;
+        mStrokeOuterRadii[2] = mStrokeOuterRadii[3] = isCircle ? mRadiusTopRight  * 2 : mRadiusTopRight;
+        mStrokeOuterRadii[4] = mStrokeOuterRadii[5] = isCircle ? mRadiusBottomRight  * 2 : mRadiusBottomRight;
+        mStrokeOuterRadii[6] = mStrokeOuterRadii[7] = isCircle ? mRadiusBottomLeft  * 2 : mRadiusBottomLeft;
     }
 
     public void onSizeChanged(int width, int height) {
@@ -116,8 +136,17 @@ public class RoundHelper {
         if (mRectF != null) {
             mRectF.set(0, 0, width, height);
         }
+
+        //内圈
         if (mStrokeRectF != null) {
             mStrokeRectF.set((mStrokeWidth / 2), (mStrokeWidth / 2), width - mStrokeWidth / 2, height - mStrokeWidth / 2);
+            //外圈
+            if(mStrokeOuterRectF != null) {
+                mStrokeOuterRectF.left = mStrokeRectF.left - mStrokeOuterWidth / 2;
+                mStrokeOuterRectF.top = mStrokeRectF.top - mStrokeOuterWidth / 2;
+                mStrokeOuterRectF.right = mStrokeRectF.right + mStrokeOuterWidth / 2;
+                mStrokeOuterRectF.bottom = mStrokeRectF.bottom + mStrokeOuterWidth / 2;
+            }
         }
     }
 
@@ -159,6 +188,17 @@ public class RoundHelper {
 
             mPath.reset();
             mPath.addRoundRect(mStrokeRectF, mStrokeRadii, Path.Direction.CCW);
+            canvas.drawPath(mPath, mPaint);
+        }
+
+        // draw outer stroke
+        if (mStrokeOuterWidth > 0) {
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(mStrokeOuterWidth);
+            mPaint.setColor(mStrokeOuterColor);
+
+            mPath.reset();
+            mPath.addRoundRect(mStrokeOuterRectF, mStrokeOuterRadii, Path.Direction.CCW);
             canvas.drawPath(mPath, mPaint);
         }
     }
