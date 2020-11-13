@@ -110,15 +110,27 @@ public class RoundHelper {
         mRadii[4] = mRadii[5] = mRadiusBottomRight - mStrokeWidth;
         mRadii[6] = mRadii[7] = mRadiusBottomLeft - mStrokeWidth;
 
-        mStrokeRadii[0] = mStrokeRadii[1] = isCircle ? mRadiusTopLeft * 2 : mRadiusTopLeft;
-        mStrokeRadii[2] = mStrokeRadii[3] = isCircle ? mRadiusTopRight * 2 : mRadiusTopRight;
-        mStrokeRadii[4] = mStrokeRadii[5] = isCircle ? mRadiusBottomRight * 2 : mRadiusBottomRight;
-        mStrokeRadii[6] = mStrokeRadii[7] = isCircle ? mRadiusBottomLeft * 2 : mRadiusBottomLeft;
+        if(isCircle) {
+            mStrokeRadii[0] = mStrokeRadii[1] = mRadiusTopLeft * 2;
+            mStrokeRadii[2] = mStrokeRadii[3] = mRadiusTopRight * 2;
+            mStrokeRadii[4] = mStrokeRadii[5] = mRadiusBottomRight * 2;
+            mStrokeRadii[6] = mStrokeRadii[7] = mRadiusBottomLeft * 2;
 
-        mStrokeOuterRadii[0] = mStrokeOuterRadii[1] = isCircle ? mRadiusTopLeft * 2 : mRadiusTopLeft;
-        mStrokeOuterRadii[2] = mStrokeOuterRadii[3] = isCircle ? mRadiusTopRight  * 2 : mRadiusTopRight;
-        mStrokeOuterRadii[4] = mStrokeOuterRadii[5] = isCircle ? mRadiusBottomRight  * 2 : mRadiusBottomRight;
-        mStrokeOuterRadii[6] = mStrokeOuterRadii[7] = isCircle ? mRadiusBottomLeft  * 2 : mRadiusBottomLeft;
+            mStrokeOuterRadii[0] = mStrokeOuterRadii[1] = mRadiusTopLeft * 2;
+            mStrokeOuterRadii[2] = mStrokeOuterRadii[3] = mRadiusTopRight  * 2;
+            mStrokeOuterRadii[4] = mStrokeOuterRadii[5] = mRadiusBottomRight  * 2;
+            mStrokeOuterRadii[6] = mStrokeOuterRadii[7] = mRadiusBottomLeft  * 2;
+        } else {
+            mStrokeRadii[0] = mStrokeRadii[1] = mRadiusTopLeft;
+            mStrokeRadii[2] = mStrokeRadii[3] = mRadiusTopRight;
+            mStrokeRadii[4] = mStrokeRadii[5] = mRadiusBottomRight;
+            mStrokeRadii[6] = mStrokeRadii[7] = mRadiusBottomLeft;
+
+            mStrokeOuterRadii[0] = mStrokeOuterRadii[1] = mRadiusTopLeft;
+            mStrokeOuterRadii[2] = mStrokeOuterRadii[3] = mRadiusTopRight;
+            mStrokeOuterRadii[4] = mStrokeOuterRadii[5] = mRadiusBottomRight;
+            mStrokeOuterRadii[6] = mStrokeOuterRadii[7] = mRadiusBottomLeft;
+        }
     }
 
     public void onSizeChanged(int width, int height) {
