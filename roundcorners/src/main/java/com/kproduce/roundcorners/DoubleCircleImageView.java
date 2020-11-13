@@ -2,8 +2,8 @@ package com.kproduce.roundcorners;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
 import com.kproduce.roundcorners.util.RoundHelper;
 import com.kproduce.roundcorners.util.RoundMethodInterface;
@@ -14,7 +14,7 @@ import com.kproduce.roundcorners.util.RoundMethodInterface;
  * <p>Date：       2020/11/12<p>
  * <p>Description：<p>
  */
-public class DoubleCircleImageView extends AppCompatImageView implements RoundMethodInterface {
+public class DoubleCircleImageView extends ImageView implements RoundMethodInterface {
 
     private RoundHelper mHelper = new RoundHelper();
 
